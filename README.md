@@ -71,7 +71,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 "# facial_landmark_detection" 
 
 ## in app.js
-<!-- Insatll dependencies
+Insatll dependencies
 import dependencies
 setup webcam and canvas
 define facemesh
@@ -80,4 +80,4 @@ Drawing utilities
 Load triangulation
 setup triangle path
 setup piont Drawing
-add drawMesh to detect function -->
+add drawMesh to detect function 
