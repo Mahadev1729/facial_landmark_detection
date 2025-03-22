@@ -69,3 +69,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 "# facial_landmark_detection" 
+
+## in app.js
+<!-- Insatll dependencies
+import dependencies
+setup webcam and canvas
+define facemesh
+detect function
+Drawing utilities
+Load triangulation
+setup triangle path
+setup piont Drawing
+add drawMesh to detect function -->
