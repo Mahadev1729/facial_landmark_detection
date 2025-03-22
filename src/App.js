@@ -18,7 +18,17 @@ function App() {
 
   return (
     <div className="App">
-      
+      <Webcam ref={webcamref} style={
+        {
+         position:"absolute",
+         marginLeft:"auto",
+         marginRight:"auto",
+         left:0,
+         right:0,
+         textAlign:"center",
+         width:
+        }
+      }/>
     </div>
   );
 }
