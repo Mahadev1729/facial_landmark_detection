@@ -8,6 +8,7 @@ import * as tf from "@tensorflow/tfjs";
 import * as facemesh from "@tensorflow-models/facemesh";
 import Webcam from 'react-webcam';
 
+ 
 
 function App() {
   // creating webcam refernce
@@ -20,7 +21,7 @@ function App() {
       { width: 640, height: 480 }, 
       scale: 0.0
     });
-    setImmediate(()=>{
+    setInterval(()=>{
        detect(net)
     },100)
   };
@@ -51,6 +52,8 @@ function App() {
 
       }
 };
+
+runFacemesh();
   return (
     <div className="App">
       <Webcam ref={webcamref} style={
