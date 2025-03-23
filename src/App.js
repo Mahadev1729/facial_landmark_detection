@@ -16,9 +16,14 @@ function App() {
 
   const runFacemesh = async () => {
     const net = await facemesh.load({
-      inputResolution: { width: 640, height: 480 }, scale: 0.0
-    })
-  }
+      inputResolution: 
+      { width: 640, height: 480 }, 
+      scale: 0.0
+    });
+    setImmediate(()=>{
+       detect(net)
+    },100)
+  };
   // create detect function
   const detect = async (net) => {
     if (typeof webcamref.current !== "undefined" && webcamref.current !== null && webcamref.current.video.readState === 4){
