@@ -26,9 +26,14 @@ function App() {
          left:0,
          right:0,
          textAlign:"center",
-         width:
+         width:640,
+         zIndex:9,
+         height:480
+         
         }
       }/>
+
+      
     </div>
   );
 }
