@@ -23,11 +23,27 @@ function App() {
   const detect = async (net) => {
     if (typeof webcamref.current !== "undefined" && webcamref.current !== null && webcamref.current.video.readState === 4){
        // get  video properties
+
+       const video=webcamref.current.video;
+       const videoWidth=webcamref.current.videoWidth;
+       const videoHeight=webcamref.current.videoHeight;
+
        // set video width
+
+       webcamref.current.video.width=videoWidth;
+       webcamref.current.video.height=videoHeight;
        // set canvas width
+       canvasref.current.width=videoWidth;
+       canvasref.current.height=videoHeight;
+
+
        // make detection
+
+       const face=await net.estimateFaces(video);
+       console.log(face);
        // get canvas context for drawing
-       
+
+
       }
 };
   return (
