@@ -13,9 +13,6 @@ function App() {
    // creating webcam refernce
   const webcamref=useRef(null);
   const canvasref = useRef(null);
-
-
-
   return (
     <div className="App">
       <Webcam ref={webcamref} style={
@@ -33,7 +30,7 @@ function App() {
         }
       }/>
 
-      
+
     </div>
   );
 }
