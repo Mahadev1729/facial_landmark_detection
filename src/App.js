@@ -1,90 +1,110 @@
-// import logo from './logo.svg';
-import "./App.css";
+// 1. Install dependencies DONE
+// 2. Import dependencies DONE
+// 3. Setup webcam and canvas DONE
+// 4. Define references to those DONE
+// 5. Load posenet DONE
+// 6. Detect function DONE
+// 7. Drawing utilities from tensorflow DONE
+// 8. Draw functions DONE
 
-import React, { useRef } from "react";
+
+
+import React, { useRef, useEffect } from "react";
+import "./App.css";
 import * as tf from "@tensorflow/tfjs";
-import * as facemesh from "@tensorflow-models/facemesh";
+// OLD MODEL
+//import * as facemesh from "@tensorflow-models/facemesh";
+
+// NEW MODEL
+import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
-import { drawMesh } from "./utlities";
+import { drawMesh } from "./utilities";
 
 function App() {
-  // creating webcam refernce
-  const webcamref = useRef(null);
-  const canvasref = useRef(null);
+  const webcamRef = useRef(null);
+  const canvasRef = useRef(null);
 
+  //  Load posenet
   const runFacemesh = async () => {
-    const net = await facemesh.load({
-      inputResolution: { width: 640, height: 480 },
-      scale: 0.0,
-    });
+    // OLD MODEL
+    // const net = await facemesh.load({
+    //   inputResolution: { width: 640, height: 480 },
+    //   scale: 0.8,
+    // });
+    // NEW MODEL
+    const net = await facemesh.load(facemesh.SupportedPackages.mediapipeFacemesh);
     setInterval(() => {
       detect(net);
-    }, 100);
+    }, 10);
   };
-  // create detect function
+
   const detect = async (net) => {
     if (
-      typeof webcamref.current !== "undefined" &&
-      webcamref.current !== null &&
-      webcamref.current.video.readyState === 4
+      typeof webcamRef.current !== "undefined" &&
+      webcamRef.current !== null &&
+      webcamRef.current.video.readyState === 4
     ) {
-      // get  video properties
+      // Get Video Properties
+      const video = webcamRef.current.video;
+      const videoWidth = webcamRef.current.video.videoWidth;
+      const videoHeight = webcamRef.current.video.videoHeight;
 
-      const video = webcamref.current.video;
-      const videoWidth = webcamref.current.videoWidth;
-      const videoHeight = webcamref.current.videoHeight;
+      // Set video width
+      webcamRef.current.video.width = videoWidth;
+      webcamRef.current.video.height = videoHeight;
 
-      // set video width
+      // Set canvas width
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videoHeight;
 
-      webcamref.current.video.width = videoWidth;
-      webcamref.current.video.height = videoHeight;
-      // set canvas width
-      canvasref.current.width = videoWidth;
-      canvasref.current.height = videoHeight;
-
-      // make detection
-
-      const face = await net.estimateFaces(video);
+      // Make Detections
+      // OLD MODEL
+      //       const face = await net.estimateFaces(video);
+      // NEW MODEL
+      const face = await net.estimateFaces({ input: video });
       console.log(face);
 
-      // get canvas context for drawing
-
-      const ctx=canvasref.current.getContext("2d");
-      drawMesh(face,ctx);
-    };
+      // Get canvas context
+      const ctx = canvasRef.current.getContext("2d");
+      requestAnimationFrame(() => { drawMesh(face, ctx) });
+    }
   };
 
-  runFacemesh();
+  useEffect(() => { runFacemesh() }, []);
+
   return (
     <div className="App">
-      <Webcam
-        ref={webcamref}
-        style={{
-          position: "absolute",
-          marginLeft: "auto",
-          marginRight: "auto",
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          width: 640,
-          zIndex: 9,
-          height: 480,
-        }}
-      />
-      <canvas
-        ref={canvasref}
-        style={{
-          position: "absolute",
-          marginLeft: "auto",
-          marginRight: "auto",
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          width: 640,
-          zIndex: 9,
-          height: 480,
-        }}
-      />
+      <header className="App-header">
+        <Webcam
+          ref={webcamRef}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            zindex: 9,
+            width: 640,
+            height: 480,
+          }}
+        />
+
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            zindex: 9,
+            width: 640,
+            height: 480,
+          }}
+        />
+      </header>
     </div>
   );
 }
