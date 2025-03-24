@@ -51,7 +51,7 @@ function App() {
 
       const ctx=canvasref.current.getContext("2d");
       drawMesh(face,ctx);
-    }
+    };
   };
 
   runFacemesh();
